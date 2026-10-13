@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    
+    /* Furni Gebeya Red Primary */
+    --primary: 356 84% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 356 84% 45%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 0 0% 12%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Light Blue & Cyan Accents */
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    --accent-blue: 199 89% 48%;
+    --accent-blue-foreground: 0 0% 100%;
+    --accent-cyan: 187 92% 43%;
+    --accent-cyan-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 356 84% 53%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Pure Black / Dark Surfaces */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 96%;
+
+    /* Furni Gebeya Red Primary in Dark Mode */
+    --primary: 356 88% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 356 88% 66%;
+
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 64%;
+
+    /* Vibrant Light Blue & Cyan Accents in Dark Mode */
+    --accent: 199 92% 58%;
+    --accent-foreground: 0 0% 100%;
+    --accent-blue: 199 92% 58%;
+    --accent-blue-foreground: 0 0% 100%;
+    --accent-cyan: 187 94% 50%;
+    --accent-cyan-foreground: 0 0% 6%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 356 88% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar and utilities */
+.safe-bottom-padding {
+  padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.brand-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-blue)) 60%, hsl(var(--accent-cyan)) 100%);
+}
+
+.brand-text-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-blue)) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

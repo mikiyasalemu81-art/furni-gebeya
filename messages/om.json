@@ -1,0 +1,81 @@
+{
+  "common": {
+    "appName": "Furni Gebeya",
+    "tagline": "Gabaa Mi'a Manaa fi Waajjiraa Itoophiyaa Isa Jalqabaa",
+    "searchPlaceholder": "Soofaa, siree, minjaala nyaataa, mi'a mukaa barbaadi...",
+    "loading": "Fe'amaa jira...",
+    "previewBadge": "Gabaa Itoophiyaa Isa Mirkanaa'e",
+    "language": "Afaan",
+    "theme": "Bifa (Theme)",
+    "viewDetails": "Bal'ina Ilaali",
+    "comingSoon": "Dhiyootti Dhiyaata",
+    "errorOccurred": "Dogoggorri uumameera. Mee irra deebi'aa yaalaa.",
+    "noResults": "Wanti barbaaddan hin argamne.",
+    "retry": "Irra Deebi'i"
+  },
+  "nav": {
+    "home": "Fuula Duraa",
+    "myPosts": "Maxxansoota Koo",
+    "saved": "Kanneen Olkaawwaman",
+    "chat": "Ergaawwan",
+    "profile": "Piroofayilii"
+  },
+  "theme": {
+    "light": "Ifaa",
+    "dark": "Dukkana",
+    "system": "Kan Sirnaa",
+    "toggle": "Bifa Jijjiiri"
+  },
+  "languages": {
+    "en": "English",
+    "am": "አማርኛ",
+    "om": "Afaan Oromoo"
+  },
+  "home": {
+    "heroTitle": "Mi'oota Manaa Qulqullina Qaban Itoophiyaa Keessaa Argadhaa",
+    "heroSubtitle": "Ogeessota mukaa, warshaalee naannoo fi gurgurtoota mirkanaa'an waliin kallattiin walqunnamaa.",
+    "categoriesTitle": "Ramaddiiwwan Daawwadhaa",
+    "categoriesSubtitle": "Kutaa hundaaf kan ta'an mi'oota ammayyaa fi aadaa",
+    "recentListingsTitle": "Mi'oota Haaraa fi Filatamo",
+    "recentListingsSubtitle": "Muka Gaattiraa, Birbiraa fi mukoota biroo qulqullina olaanaa qaban",
+    "categories": {
+      "livingRoom": "Mi'a Saaloonaa",
+      "bedroom": "Mi'a Kutaa Ciisichaa",
+      "dining": "Minjaala Nyaataa fi Kushiinaa",
+      "office": "Mi'a Waajjiraa",
+      "custom": "Hojii Mukaa Aadaa",
+      "outdoor": "Mi'a Dirree fi Balballaa"
+    }
+  },
+  "myPosts": {
+    "title": "Maxxansoota Koo",
+    "subtitle": "Mi'oota gurgurtaaf dhiheessitan hordofaa, haaromsaa, to'adhaa",
+    "createBtn": "Mi'a Maxxansi",
+    "placeholderNotice": "Hamma ammaatti mi'a tokkoyyuu hin maxxansine.",
+    "tabs": {
+      "all": "Hunda",
+      "active": "Hojirra Kan Jiru",
+      "drafts": "Wixinee",
+      "sold": "Kan Gurgurame"
+    }
+  },
+  "profile": {
+    "title": "Piroofayilii fi Herrega",
+    "subtitle": "Odeeffannoo dhuunfaa, daldala, maamilummaa fi afaan qindeessaa",
+    "guestName": "Keessummaa Daawwataa",
+    "guestEmail": "Lakkoofsa bilbilaatiin seenaa",
+    "memberSince": "Miseensa Furni Gebeya",
+    "settings": "Filannoowwan fi Qindeesa",
+    "languagePreference": "Filannoo Afaanii",
+    "themePreference": "Bifa Duubbee (Theme)",
+    "security": "Eegumsa AfroMessage fi Supabase",
+    "sellerVerification": "Mirkaneessa Gurguraa / Dhiheessaa",
+    "authNotice": "Seensi bilbilaa AfroMessage SMS OTP fi Supabase tiin kan eegamedha."
+  },
+  "chat": {
+    "title": "Ergaawwan Keessoo",
+    "subtitle": "Qunnamtii kallattii bittoota fi ogeessota mukaa jiddutti",
+    "noConversations": "Hamma ammaatti mariin hin jiru. Mi'oota filachuun ogeessa waliin mari'adhaa.",
+    "typePlaceholder": "Ergaa keessan asitti barreessaa..."
+  }
+}

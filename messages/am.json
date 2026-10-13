@@ -1,0 +1,81 @@
+{
+  "common": {
+    "appName": "ፈርኒ ገበያ",
+    "tagline": "የኢትዮጵያ ቀዳሚ የቤትና የቢሮ ዕቃዎች ገበያ",
+    "searchPlaceholder": "ሶፋ፣ አልጋ፣ የመመገቢያ ጠረጴዛ፣ የእንጨት ስራዎችን ይፈልጉ...",
+    "loading": "በመጫን ላይ...",
+    "previewBadge": "የተረጋገጠ የኢትዮጵያ የቤት ዕቃዎች ገበያ",
+    "language": "ቋንቋ",
+    "theme": "ገጽታ (ቀለም)",
+    "viewDetails": "ዝርዝሩን ይመልከቱ",
+    "comingSoon": "በቅርብ ቀን",
+    "errorOccurred": "ስህተት ተከስቷል። እባክዎ እንደገና ይሞክሩ።",
+    "noResults": "ምንም ውጤት አልተገኘም።",
+    "retry": "እንደገና ይሞክሩ"
+  },
+  "nav": {
+    "home": "ዋና ገጽ",
+    "myPosts": "የእኔ ማስታወቂያዎች",
+    "saved": "የተቀመጡ",
+    "chat": "መልዕክቶች",
+    "profile": "መገለጫ"
+  },
+  "theme": {
+    "light": "ነጭ / ብሩህ",
+    "dark": "ጥቁር / ጨለማ",
+    "system": "የስርዓቱ ምርጫ",
+    "toggle": "ገጽታን ቀይር"
+  },
+  "languages": {
+    "en": "English",
+    "am": "አማርኛ",
+    "om": "Afaan Oromoo"
+  },
+  "home": {
+    "heroTitle": "ጥራት ያላቸውን የቤት ዕቃዎች በኢትዮጵያ ያግኙ",
+    "heroSubtitle": "ከተመረጡ አናፂዎች፣ የእንጨት ባለሙያዎች እና ታማኝ ሻጮች ጋር በቀጥታ ይገናኙ።",
+    "categoriesTitle": "ምድቦችን ያስሱ",
+    "categoriesSubtitle": "ለእያንዳንዱ ክፍል የሚስማሙ ልዩ ልዩ ዕቃዎች",
+    "recentListingsTitle": "አዳዲስና ተወዳጅ የቤት ዕቃዎች",
+    "recentListingsSubtitle": "ከዋንዛ፣ ፅድ፣ ዝግባ እና ሌሎች ጥራት ያላቸው የእንጨት ውጤቶች",
+    "categories": {
+      "livingRoom": "የሳሎን ዕቃዎች",
+      "bedroom": "የመኝታ ቤት ዕቃዎች",
+      "dining": "የመመገቢያ እና ወጥ ቤት",
+      "office": "የቢሮ ዕቃዎች",
+      "custom": "ብጁ የእንጨት ጥበብ",
+      "outdoor": "የበረንዳ እና ግቢ"
+    }
+  },
+  "myPosts": {
+    "title": "የእኔ ማስታወቂያዎች",
+    "subtitle": "የለጠፏቸውን ዕቃዎች ይከታተሉ፣ ያሻሽሉ እና ያስተዳድሩ",
+    "createBtn": "ዕቃ ይለጥፉ",
+    "placeholderNotice": "እስካሁን የለጠፉት ዕቃ የለም።",
+    "tabs": {
+      "all": "ሁሉም",
+      "active": "ንቁ",
+      "drafts": "ረቂቅ",
+      "sold": "የተሸጡ"
+    }
+  },
+  "profile": {
+    "title": "መገለጫ እና መለያ",
+    "subtitle": "የግል መረጃዎን፣ የንግድ ስምዎን፣ ምዝገባዎን እና ቋንቋን ያስተካክሉ",
+    "guestName": "እንግዳ ተጠቃሚ",
+    "guestEmail": "በስልክ ቁጥርዎ ይግቡ",
+    "memberSince": "የፈርኒ ገበያ አባል",
+    "settings": "ምርጫዎች እና ማስተካከያዎች",
+    "languagePreference": "የቋንቋ ምርጫ",
+    "themePreference": "የገጽታ ቀለም",
+    "security": "ደህንነት እና የአፍሮሜሴጅ መግቢያ",
+    "sellerVerification": "የሻጭ / የአቅራቢ ማረጋገጫ",
+    "authNotice": "የስልክ መለያ መግቢያ በአፍሮሜሴጅ ኤስኤምኤስ (AfroMessage SMS OTP) እና በሱፓቤዝ (Supabase) የተጠበቀ ነው።"
+  },
+  "chat": {
+    "title": "የቀጥታ መልዕክቶች",
+    "subtitle": "በገዢዎች እና በአናፂዎች መካከል የሚደረግ ፈጣን ንግግር",
+    "noConversations": "እስካሁን የተጀመረ ውይይት የለም። ዕቃዎችን ጠቅ በማድረግ ከሻጩ ጋር በቀጥታ ይወያዩ።",
+    "typePlaceholder": "መልዕክትዎን እዚህ ይጻፉ..."
+  }
+}

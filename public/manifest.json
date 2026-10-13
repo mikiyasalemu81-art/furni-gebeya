@@ -1,0 +1,24 @@
+{
+  "name": "Furni Gebeya - Ethiopian Furniture Marketplace",
+  "short_name": "Furni Gebeya",
+  "description": "Ethiopia's Premier Marketplace for Artisanal Furniture, Timber & Carpentry Workshops",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

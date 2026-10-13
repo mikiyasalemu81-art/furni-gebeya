@@ -1,0 +1,81 @@
+{
+  "common": {
+    "appName": "Furni Gebeya",
+    "tagline": "Ethiopia's Premier Furniture Marketplace",
+    "searchPlaceholder": "Search sofas, beds, dining tables, woodcraft...",
+    "loading": "Loading...",
+    "previewBadge": "Verified Ethiopian Marketplace",
+    "language": "Language",
+    "theme": "Theme",
+    "viewDetails": "View Details",
+    "comingSoon": "Coming Soon",
+    "errorOccurred": "Something went wrong. Please try again.",
+    "noResults": "No results found.",
+    "retry": "Retry"
+  },
+  "nav": {
+    "home": "Home",
+    "myPosts": "My Posts",
+    "saved": "Saved",
+    "chat": "Chat",
+    "profile": "Profile"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Toggle theme"
+  },
+  "languages": {
+    "en": "English",
+    "am": "አማርኛ",
+    "om": "Afaan Oromoo"
+  },
+  "home": {
+    "heroTitle": "Discover Quality Furniture Across Ethiopia",
+    "heroSubtitle": "Connect directly with local carpenters, artisanal workshops, and verified sellers.",
+    "categoriesTitle": "Browse Categories",
+    "categoriesSubtitle": "Find pieces handcrafted for every room",
+    "recentListingsTitle": "Featured & Recent Furniture",
+    "recentListingsSubtitle": "High-quality timber and furniture crafted in Addis Ababa and beyond",
+    "categories": {
+      "livingRoom": "Living Room",
+      "bedroom": "Bedroom",
+      "dining": "Dining & Kitchen",
+      "office": "Office & Study",
+      "custom": "Custom Woodcraft",
+      "outdoor": "Outdoor & Balcony"
+    }
+  },
+  "myPosts": {
+    "title": "My Posts",
+    "subtitle": "Track, update, and manage your furniture listings",
+    "createBtn": "Post an Item",
+    "placeholderNotice": "You haven't listed any furniture yet.",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "drafts": "Drafts",
+      "sold": "Sold"
+    }
+  },
+  "profile": {
+    "title": "Profile & Account",
+    "subtitle": "Manage your profile, business details, subscriptions, and language preferences",
+    "guestName": "Guest Explorer",
+    "guestEmail": "Sign in with phone number",
+    "memberSince": "Furni Gebeya Member",
+    "settings": "Preferences & Configuration",
+    "languagePreference": "Language Preference",
+    "themePreference": "Color Theme",
+    "security": "Security & AfroMessage Auth",
+    "sellerVerification": "Seller / Supplier Verification",
+    "authNotice": "Phone authentication is powered by AfroMessage SMS OTP with hashed verification codes and 5-minute expiry."
+  },
+  "chat": {
+    "title": "In-App Messages",
+    "subtitle": "Real-time communication between buyers and artisans",
+    "noConversations": "No conversations yet. Inquire about any furniture item to chat directly with the seller.",
+    "typePlaceholder": "Type your message..."
+  }
+}
