@@ -550,7 +550,7 @@ export async function getUserConversations(userId: string): Promise<Conversation
               id: otherUser.id,
               full_name: otherUser.full_name,
               avatar_url: otherUser.avatar_url,
-              role: otherUser.role,
+              role: otherUser.role || "buyer",
               is_verified: otherUser.is_verified,
             }
           : {

@@ -464,7 +464,7 @@ export async function createListing(
     seller_id: seller.id,
     seller_name: seller.business_name || seller.full_name,
     seller_phone: seller.phone_number,
-    seller_role: seller.role,
+    seller_role: seller.role || "seller",
     seller_is_verified: seller.is_verified,
     seller_avatar_url: seller.avatar_url,
     category_id: category.id,

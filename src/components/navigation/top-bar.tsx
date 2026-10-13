@@ -13,7 +13,7 @@ export function TopBar() {
   const t = useTranslations("common");
   const { user, openLogin } = useAuth();
 
-  const getRoleBadge = (role: string) => {
+  const getRoleBadge = (role?: string | null) => {
     switch (role) {
       case "admin":
         return { label: "Admin", bg: "bg-red-500/15 text-red-500 border-red-500/30" };

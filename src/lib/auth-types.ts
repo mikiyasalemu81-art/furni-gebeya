@@ -11,10 +11,11 @@ export type SubscriptionStatus = "trial" | "active" | "grace_period" | "expired"
 export interface UserProfile {
   id: string;
   phone_number: string;
+  phone?: string;
   full_name: string;
   avatar_url: string | null;
   cover_photo_url?: string | null;
-  role: UserRole;
+  role: UserRole | null;
   business_name?: string | null;
   city: string;
   subcity?: string | null;
@@ -29,6 +30,7 @@ export interface UserProfile {
   is_top_supplier?: boolean;
   avg_response_hours?: number;
   is_onboarded: boolean;
+  onboarding_done?: boolean;
   verification_status: VerificationStatus;
   is_suspended?: boolean;
   suspended_reason?: string | null;

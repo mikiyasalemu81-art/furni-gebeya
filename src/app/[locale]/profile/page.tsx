@@ -37,7 +37,7 @@ export default function ProfilePage() {
   const { user, isLoading, openLogin, openEditProfile, openRoleSelection, logout } = useAuth();
   const [verifyModalOpen, setVerifyModalOpen] = React.useState(false);
 
-  const getRoleDisplay = (role: string) => {
+  const getRoleDisplay = (role?: string | null) => {
     switch (role) {
       case "admin":
         return {

@@ -111,15 +111,17 @@ export async function createOrAuthenticateUser(phone: string): Promise<{
   const cookieStore = await cookies();
 
   // 1. Seeded Admin check
-  if (phone === SEEDED_ADMIN_USER.phone_number) {
-    cookieStore.set(SESSION_COOKIE_NAME, JSON.stringify({ phone, id: SEEDED_ADMIN_USER.id }), {
+  const adminPhone = process.env.ADMIN_PHONE || SEEDED_ADMIN_USER.phone_number;
+  if (phone === adminPhone) {
+    const adminUser = { ...SEEDED_ADMIN_USER, phone_number: phone, phone };
+    cookieStore.set(SESSION_COOKIE_NAME, JSON.stringify({ phone, id: adminUser.id }), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: "/",
     });
-    return { profile: SEEDED_ADMIN_USER, isFirstLogin: false };
+    return { profile: adminUser, isFirstLogin: false };
   }
 
   // 2. Check Supabase Admin if available
@@ -132,52 +134,77 @@ export async function createOrAuthenticateUser(phone: string): Promise<{
       const { data: profileData } = await admin
         .from("profiles")
         .select("*")
-        .eq("phone_number", phone)
+        .or(`phone.eq.${phone},phone_number.eq.${phone}`)
         .maybeSingle();
 
       if (profileData) {
         existingUser = {
           id: profileData.id,
-          phone_number: profileData.phone_number,
-          full_name: profileData.full_name,
+          phone_number: profileData.phone || profileData.phone_number,
+          phone: profileData.phone || profileData.phone_number,
+          full_name: profileData.full_name || `Member ${phone.slice(-4)}`,
           avatar_url: profileData.avatar_url,
-          role: profileData.role as UserRole,
+          role: profileData.role as UserRole | null,
           business_name: profileData.business_name,
-          city: profileData.city,
+          city: profileData.city || "Addis Ababa",
           subcity: profileData.subcity,
           address: profileData.address,
           bio: profileData.bio,
+          whatsapp_number: profileData.whatsapp_number,
+          telegram_username: profileData.telegram_username,
+          map_location_url: profileData.map_location_url,
           is_verified: Boolean(profileData.is_verified),
-          is_onboarded: Boolean(profileData.is_onboarded),
+          is_onboarded: Boolean(profileData.onboarding_done ?? profileData.is_onboarded),
+          onboarding_done: Boolean(profileData.onboarding_done ?? profileData.is_onboarded),
           verification_status: (profileData.verification_status || "unverified") as VerificationStatus,
         };
       } else {
+        // Create user with deterministic synthetic email: <digits>@phone.furnigebeya.app
+        const cleanDigits = phone.replace(/\D/g, "");
+        const syntheticEmail = `${cleanDigits}@phone.furnigebeya.app`;
+
+        let userId: string;
         const { data: authUser } = await admin.auth.admin.createUser({
+          email: syntheticEmail,
           phone,
+          email_confirm: true,
           phone_confirm: true,
           user_metadata: { phone },
         });
 
-        const userId = authUser?.user?.id || crypto.randomUUID();
+        if (authUser?.user?.id) {
+          userId = authUser.user.id;
+        } else {
+          // If already exists in auth.users, fetch user list
+          const { data: userList } = await admin.auth.admin.listUsers();
+          const match = userList?.users?.find(
+            (u) => u.email === syntheticEmail || u.phone === phone
+          );
+          userId = match?.id || crypto.randomUUID();
+        }
 
         const newProfile: UserProfile = {
           id: userId,
           phone_number: phone,
-          full_name: `User ${phone.slice(-4)}`,
+          phone,
+          full_name: `Member ${phone.slice(-4)}`,
           avatar_url: null,
-          role: "buyer",
+          role: null, // role null until chosen
           city: "Addis Ababa",
           is_verified: false,
           is_onboarded: false,
+          onboarding_done: false,
           verification_status: "unverified",
         };
 
         await admin.from("profiles").upsert({
           id: userId,
+          phone,
           phone_number: phone,
           full_name: newProfile.full_name,
-          role: "buyer",
+          role: null,
           city: "Addis Ababa",
+          onboarding_done: false,
           is_onboarded: false,
           verification_status: "unverified",
         });
@@ -195,17 +222,19 @@ export async function createOrAuthenticateUser(phone: string): Promise<{
     existingUser = {
       id: crypto.randomUUID(),
       phone_number: phone,
-      full_name: `Furni Member (${phone.slice(-4)})`,
+      phone,
+      full_name: `Member ${phone.slice(-4)}`,
       avatar_url: null,
-      role: "buyer",
+      role: null,
       city: "Addis Ababa",
       is_verified: false,
       is_onboarded: false,
+      onboarding_done: false,
       verification_status: "unverified",
     };
     memoryProfiles.set(phone, existingUser);
   } else {
-    isFirstLogin = !existingUser.is_onboarded;
+    isFirstLogin = !existingUser.role || !existingUser.is_onboarded;
   }
 
   cookieStore.set(
@@ -224,14 +253,13 @@ export async function createOrAuthenticateUser(phone: string): Promise<{
 }
 
 /**
- * Updates user role and marks onboarding as completed
+ * Updates user role (supplier, seller, buyer)
  */
 export async function setUserRole(role: UserRole): Promise<UserProfile | null> {
   const current = await getCurrentUserProfile();
   if (!current) return null;
 
   current.role = role;
-  current.is_onboarded = true;
   memoryProfiles.set(current.phone_number, current);
 
   const admin = getSupabaseAdmin();
@@ -239,10 +267,36 @@ export async function setUserRole(role: UserRole): Promise<UserProfile | null> {
     try {
       await admin
         .from("profiles")
-        .update({ role, is_onboarded: true })
-        .eq("phone_number", current.phone_number);
+        .update({ role })
+        .or(`phone.eq.${current.phone_number},phone_number.eq.${current.phone_number}`);
     } catch (e) {
       console.error("[Failed to update role in Supabase]", e);
+    }
+  }
+
+  return current;
+}
+
+/**
+ * Marks welcome onboarding as complete
+ */
+export async function completeOnboarding(): Promise<UserProfile | null> {
+  const current = await getCurrentUserProfile();
+  if (!current) return null;
+
+  current.is_onboarded = true;
+  current.onboarding_done = true;
+  memoryProfiles.set(current.phone_number, current);
+
+  const admin = getSupabaseAdmin();
+  if (admin) {
+    try {
+      await admin
+        .from("profiles")
+        .update({ onboarding_done: true, is_onboarded: true })
+        .or(`phone.eq.${current.phone_number},phone_number.eq.${current.phone_number}`);
+    } catch (e) {
+      console.error("[Failed to mark onboarding done in Supabase]", e);
     }
   }
 

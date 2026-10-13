@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 interface OnboardingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  userRole?: string;
+  userRole?: string | null;
 }
 
 export function OnboardingModal({ isOpen, onClose, userRole }: OnboardingModalProps) {

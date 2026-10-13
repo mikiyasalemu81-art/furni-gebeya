@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
       normalizedPhone: validation.normalized,
       operator: validation.operator,
       cooldownSeconds: result.cooldownSeconds,
-      devCode: result.devCode, // available in dev mode for testing convenience
     });
   } catch (err: any) {
     console.error("[Send OTP API Error]", err);
