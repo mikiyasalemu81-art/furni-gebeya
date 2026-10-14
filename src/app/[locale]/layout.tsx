@@ -11,8 +11,10 @@ import { ProfileEditModal } from "@/components/auth/profile-edit-modal";
 import { OnboardingWrapper } from "@/components/auth/onboarding-wrapper";
 import { TopBar } from "@/components/navigation/top-bar";
 import { BottomNav } from "@/components/navigation/bottom-nav";
+import { Footer } from "@/components/navigation/footer";
 import { getCurrentUserProfile } from "@/lib/auth-session";
 import { PwaRegister } from "@/components/pwa/pwa-register";
+import { PwaSplash } from "@/components/pwa/pwa-splash";
 import { CompareProvider } from "@/components/compare/compare-provider";
 import { CompareTray } from "@/components/compare/compare-tray";
 import "../globals.css";
@@ -21,6 +23,9 @@ export const metadata: Metadata = {
   title: "Furni Gebeya | Ethiopia's Furniture Marketplace",
   description:
     "Discover handcrafted and modern furniture directly from carpenters and verified sellers across Ethiopia.",
+  authors: [{ name: "Imako Solution", url: "https://imakosolutions.com" }],
+  creator: "Imako Solution",
+  publisher: "Imako Solution",
   manifest: "/manifest.json",
   icons: {
     icon: "/icons/icon-192.svg",
@@ -68,8 +73,9 @@ export default async function LocaleLayout({
               <CompareProvider>
                 <div className="relative flex min-h-screen flex-col">
                   <TopBar />
-                  <main className="flex-1 pb-24">{children}</main>
+                  <main className="flex-1 pb-24 md:pb-12">{children}</main>
                   <CompareTray />
+                  <Footer />
                   <BottomNav />
                 </div>
                 <PhoneLoginModal />
@@ -77,6 +83,7 @@ export default async function LocaleLayout({
                 <ProfileEditModal />
                 <OnboardingWrapper />
                 <PwaRegister />
+                <PwaSplash />
               </CompareProvider>
             </AuthProvider>
           </NextIntlClientProvider>

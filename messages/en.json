@@ -11,7 +11,13 @@
     "comingSoon": "Coming Soon",
     "errorOccurred": "Something went wrong. Please try again.",
     "noResults": "No results found.",
-    "retry": "Retry"
+    "retry": "Retry",
+    "builtBy": "Built by",
+    "imakoSolution": "Imako Solution",
+    "imakoAlt": "Imako Solution logo",
+    "imakoAria": "Visit Imako Solution website",
+    "aboutBuiltBy": "Furni Gebeya is built by Imako Solution",
+    "about": "About"
   },
   "nav": {
     "home": "Home",

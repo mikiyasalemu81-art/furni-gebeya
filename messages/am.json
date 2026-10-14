@@ -11,7 +11,13 @@
     "comingSoon": "በቅርብ ቀን",
     "errorOccurred": "ስህተት ተከስቷል። እባክዎ እንደገና ይሞክሩ።",
     "noResults": "ምንም ውጤት አልተገኘም።",
-    "retry": "እንደገና ይሞክሩ"
+    "retry": "እንደገና ይሞክሩ",
+    "builtBy": "የተገነባው በ",
+    "imakoSolution": "ኢማኮ ሶሉሽን",
+    "imakoAlt": "የኢማኮ ሶሉሽን አርማ",
+    "imakoAria": "የኢማኮ ሶሉሽን ድረ-ገጽ ይጎብኙ",
+    "aboutBuiltBy": "ፈርኒ ገበያ የተገነባው በኢማኮ ሶሉሽን ነው",
+    "about": "ስለ መድረኩ"
   },
   "nav": {
     "home": "ዋና ገጽ",

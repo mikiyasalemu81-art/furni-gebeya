@@ -14,6 +14,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BuiltByImako } from "@/components/brand/built-by-imako";
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -172,6 +173,11 @@ export function OnboardingModal({ isOpen, onClose, userRole }: OnboardingModalPr
               </>
             )}
           </Button>
+        </div>
+
+        {/* Built by Imako Solution */}
+        <div className="pt-2 border-t border-border/40">
+          <BuiltByImako variant="splash" />
         </div>
       </div>
     </div>

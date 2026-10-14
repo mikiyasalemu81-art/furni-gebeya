@@ -11,7 +11,13 @@
     "comingSoon": "Dhiyootti Dhiyaata",
     "errorOccurred": "Dogoggorri uumameera. Mee irra deebi'aa yaalaa.",
     "noResults": "Wanti barbaaddan hin argamne.",
-    "retry": "Irra Deebi'i"
+    "retry": "Irra Deebi'i",
+    "builtBy": "Kan ijaarame",
+    "imakoSolution": "Imako Solution",
+    "imakoAlt": "Asxaa Imako Solution",
+    "imakoAria": "Weebsaayitii Imako Solution daawwadhaa",
+    "aboutBuiltBy": "Furni Gebeyaan Imako Solution tin ijaarame",
+    "about": "Waa'ee Misoonsaa"
   },
   "nav": {
     "home": "Fuula Duraa",

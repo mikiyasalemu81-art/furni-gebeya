@@ -22,7 +22,9 @@ import {
   CheckCircle,
   FileCheck,
   ArrowRight,
+  Info,
 } from "lucide-react";
+import { BuiltByImako } from "@/components/brand/built-by-imako";
 import { ThemeSelectorDropdown } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ProfileSkeleton } from "@/components/skeletons/profile-skeleton";
@@ -333,7 +335,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Stage 3 Status */}
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-center justify-between py-2 border-b border-border/60">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-accent-cyan/15 text-accent-cyan">
               <Database className="h-4 w-4" />
@@ -350,6 +352,24 @@ export default function ProfilePage() {
           <span className="text-[11px] font-semibold text-accent-cyan bg-accent-cyan/10 px-2 py-0.5 rounded-md">
             Stage 3 Active
           </span>
+        </div>
+
+        {/* About & Imako Solution Credit */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
+              <Info className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                About Furni Gebeya
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Furni Gebeya is built by Imako Solution
+              </p>
+            </div>
+          </div>
+          <BuiltByImako variant="settings" />
         </div>
       </div>
 

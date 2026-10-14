@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/auth/auth-provider";
+import { BuiltByImako } from "@/components/brand/built-by-imako";
 
 export function OnboardingWelcomeClient({ locale }: { locale: string }) {
   const router = useRouter();
@@ -176,6 +177,11 @@ export function OnboardingWelcomeClient({ locale }: { locale: string }) {
               )}
             </Button>
           )}
+        </div>
+
+        {/* Built by Imako Solution Credit */}
+        <div className="pt-2 border-t border-border/50">
+          <BuiltByImako variant="splash" />
         </div>
       </div>
     </div>
