@@ -36,7 +36,7 @@ export function ListingCard({
   const coverImage =
     listing.images.find((img) => img.is_cover)?.url ||
     listing.images[0]?.url ||
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop&q=80";
+    "/placeholder-furniture.svg";
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault();

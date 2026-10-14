@@ -44,24 +44,6 @@ const memoryVerifications = new Map<string, VerificationRequest>();
 const memoryAuditLogs: AdminAuditLog[] = [];
 const localDocumentStore = new Map<string, { buffer: Buffer; mimeType: string }>();
 
-// Seed a sample pending verification in development for instant review testing
-const samplePendingId = "v0000000-0000-0000-0000-000000000001";
-memoryVerifications.set(samplePendingId, {
-  id: samplePendingId,
-  user_id: "u-sample-artisan-01",
-  user_name: "Tadesse Wanza Woodcraft",
-  user_phone: "+251912345678",
-  user_role: "supplier",
-  business_name: "Tadesse & Sons Custom Carpentry",
-  city: "Addis Ababa",
-  address: "Merkato Berbere Ber, Block 14, Addis Ababa",
-  id_front_path: "mock/tadesse_id_front.jpg",
-  id_back_path: "mock/tadesse_id_back.jpg",
-  trade_license_path: "mock/tadesse_trade_license.pdf",
-  status: "pending",
-  created_at: new Date(Date.now() - 3600000).toISOString(),
-});
-
 /**
  * Uploads a document to the PRIVATE Supabase Storage bucket 'verifications'
  */

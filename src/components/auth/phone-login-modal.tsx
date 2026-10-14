@@ -125,11 +125,6 @@ export function PhoneLoginModal() {
     }
   };
 
-  const fillAdminAccount = () => {
-    setPhoneNumber("0911000000");
-    handleSendOtp("0911000000");
-  };
-
   const formatTimer = (seconds: number) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
@@ -223,17 +218,7 @@ export function PhoneLoginModal() {
               )}
             </Button>
 
-            {/* Seeded Admin Dev Button */}
-            <div className="pt-2 border-t border-border/60 text-center">
-              <button
-                type="button"
-                onClick={fillAdminAccount}
-                className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-[11px] font-semibold text-primary hover:bg-primary/10 transition-colors"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Quick Test: Seeded Admin (+251911000000)
-              </button>
-            </div>
+
           </div>
         )}
 

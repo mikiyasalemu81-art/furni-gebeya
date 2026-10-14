@@ -38,7 +38,7 @@ export function CompareTray() {
               src={
                 item.images.find((i) => i.is_cover)?.url ||
                 item.images[0]?.url ||
-                "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300"
+                "/placeholder-furniture.svg"
               }
               alt={item.title}
               className="w-8 h-8 rounded-lg object-cover shrink-0"

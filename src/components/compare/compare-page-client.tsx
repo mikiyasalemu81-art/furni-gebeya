@@ -104,7 +104,7 @@ export function ComparePageClient({ locale }: { locale: string }) {
                           src={
                             item.images.find((i) => i.is_cover)?.url ||
                             item.images[0]?.url ||
-                            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400"
+                            "/placeholder-furniture.svg"
                           }
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform group-hover:scale-105"

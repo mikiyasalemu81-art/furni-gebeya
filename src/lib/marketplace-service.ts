@@ -25,92 +25,6 @@ const memoryReports = new Map<string, Report>();
 const memoryWantedRequests = new Map<string, WantedRequest>();
 const memoryNotifications = new Map<string, InAppNotification[]>(); // userId -> InAppNotification[]
 
-// Seed sample wanted request
-const sampleWantedId = "wnt-00000000-0000-0001";
-memoryWantedRequests.set(sampleWantedId, {
-  id: sampleWantedId,
-  user_id: "u-sample-buyer-01",
-  user_name: "Almaz Kebede",
-  user_phone: "+251911223344",
-  user_avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
-  title: "Looking for 6-Seater Solid Wanza Dining Set",
-  category_id: "cat-dining",
-  category_name: "Dining & Kitchen",
-  description: "Need a durable solid Wanza wood dining table with 6 cushioned chairs. Preferably natural walnut/dark polish finish. Addis Ababa Bole area.",
-  budget_min: 45000,
-  budget_max: 65000,
-  currency: "ETB",
-  quantity: 1,
-  city: "Addis Ababa",
-  images: [
-    "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&auto=format&fit=crop&q=80"
-  ],
-  status: "active",
-  expires_at: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
-  created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-  updated_at: new Date().toISOString(),
-});
-
-// Seed second wanted request
-const sampleWantedId2 = "wnt-00000000-0000-0002";
-memoryWantedRequests.set(sampleWantedId2, {
-  id: sampleWantedId2,
-  user_id: "u-sample-artisan-01",
-  user_name: "Tadesse Wanza Woodcraft",
-  user_phone: "+251912345678",
-  user_avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
-  title: "Seasoned Zigba Timber Planks (200 Pcs)",
-  category_id: "cat-custom",
-  category_name: "Custom Woodcraft",
-  description: "Looking for kiln-dried or seasoned Zigba timber boards for sofa framework construction. Immediate purchase.",
-  budget_min: 80000,
-  budget_max: 120000,
-  currency: "ETB",
-  quantity: 200,
-  city: "Hawassa",
-  images: [],
-  status: "active",
-  expires_at: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
-  created_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-  updated_at: new Date().toISOString(),
-});
-
-
-// Seed sample review for initial rich UI testing
-const sampleReviewId = "rev-00000000-0000-0001";
-memoryReviews.set(sampleReviewId, {
-  id: sampleReviewId,
-  reviewer_id: "u-sample-buyer-01",
-  reviewer_name: "Almaz Kebede",
-  reviewer_avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80",
-  target_user_id: "u-sample-artisan-01",
-  rating: 5,
-  comment: "Excellent craftsmanship on the custom Wanza dining table! Delivered on time with high grade finish.",
-  status: "approved",
-  created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-  updated_at: new Date().toISOString(),
-});
-
-// Seed sample subscription for artisan
-const sampleSubId = "sub-00000000-0000-0001";
-memorySubscriptions.set(sampleSubId, {
-  id: sampleSubId,
-  user_id: "u-sample-artisan-01",
-  user_name: "Tadesse Wanza Woodcraft",
-  user_phone: "+251912345678",
-  plan_name: "Standard Monthly (30 Days)",
-  amount: 0,
-  currency: "ETB",
-  payment_method: "admin_grant",
-  status: "active",
-  starts_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-  expires_at: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
-  notes: "Initial 30-day free trial on account approval",
-  created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-  updated_at: new Date().toISOString(),
-});
-
-// ============================================================================
 // Stage 5: Subscriptions & Contact Views
 // ============================================================================
 
@@ -930,22 +844,6 @@ export async function updateWantedStatus(
 
 export async function getUserNotifications(userId: string): Promise<InAppNotification[]> {
   const notifs = memoryNotifications.get(userId) || [];
-  if (notifs.length === 0) {
-    // Generate default welcome notification for user
-    const sample: InAppNotification = {
-      id: "notif-0001",
-      user_id: userId,
-      title: "Welcome to Furni Gebeya! 🇪🇹",
-      message: "Explore handcrafted furniture from top artisans or post what you need on the Wanted Board.",
-      type: "system",
-      link_url: "/wanted",
-      is_read: false,
-      created_at: new Date().toISOString(),
-    };
-    notifs.push(sample);
-    memoryNotifications.set(userId, notifs);
-  }
-
   return [...notifs].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 }
 

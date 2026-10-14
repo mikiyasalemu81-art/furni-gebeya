@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   Search,
@@ -379,15 +380,36 @@ export default function HomePage() {
         {isLoading ? (
           <ListingGridSkeleton count={8} />
         ) : listings.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-border p-12 text-center space-y-3">
-            <Sofa className="mx-auto h-12 w-12 text-muted-foreground/40" />
-            <h3 className="text-base font-bold text-foreground">No furniture found</h3>
-            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-              We couldn't find any listings matching your search criteria. Try removing some filters or searching for another term.
-            </p>
-            <Button variant="outline" size="sm" onClick={handleClearFilters} className="text-xs font-bold">
-              Reset All Filters
-            </Button>
+          <div className="rounded-3xl border border-dashed border-border p-12 text-center space-y-4 bg-card/40">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Sofa className="h-8 w-8" />
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-bold text-foreground">
+                {searchTerm || selectedCategory !== "all" || selectedCity !== "All Cities"
+                  ? "No furniture found"
+                  : "No listings yet"}
+              </h3>
+              <p className="text-xs text-muted-foreground max-w-md mx-auto">
+                {searchTerm || selectedCategory !== "all" || selectedCity !== "All Cities"
+                  ? "We couldn't find any listings matching your search criteria. Try removing some filters or searching for another term."
+                  : "No listings yet. Be the first to post! Sell handcrafted woodwork, living room sets, and quality furniture to buyers across Ethiopia."}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+              {searchTerm || selectedCategory !== "all" || selectedCity !== "All Cities" ? (
+                <Button variant="outline" size="sm" onClick={handleClearFilters} className="text-xs font-bold">
+                  Reset All Filters
+                </Button>
+              ) : (
+                <Link href="/my-posts">
+                  <Button size="sm" className="text-xs font-bold gap-2">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Post Furniture
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         ) : (
           <>

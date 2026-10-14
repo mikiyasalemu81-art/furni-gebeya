@@ -41,16 +41,16 @@ export interface UserProfile {
 }
 
 export const SEEDED_ADMIN_USER: UserProfile = {
-  id: "a0000000-0000-0000-0000-000000000001",
-  phone_number: "+251911000000",
-  full_name: "Furni Gebeya Administrator",
-  avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+  id: "f300348f-53dd-4157-9198-6baeedcd5803",
+  phone_number: "+251907173634",
+  full_name: "Furni Gebeya Master Admin",
+  avatar_url: null,
   role: "admin",
-  business_name: "Furni Gebeya Platform HQ",
+  business_name: "Furni Gebeya Headquarters",
   city: "Addis Ababa",
   subcity: "Bole",
-  address: "Bole Road, Mega Building 4th Floor",
-  bio: "Official Platform Administrator for Furni Gebeya Marketplace. Overseeing verified carpenters, showrooms, and quality listings.",
+  address: "Bole, Addis Ababa",
+  bio: "Master administrator for Furni Gebeya Marketplace. Overseeing verified suppliers, showrooms, and quality listings.",
   is_verified: true,
   is_onboarded: true,
   verification_status: "approved",
