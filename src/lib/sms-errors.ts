@@ -9,7 +9,8 @@ export type SmsErrorCode =
   | "invalid_credentials"
   | "insufficient_balance"
   | "invalid_phone"
-  | "provider_unavailable";
+  | "provider_unavailable"
+  | "unverified_beta_contact";
 
 export const SMS_ERROR_TRANSLATIONS: Record<string, Record<SmsErrorCode, string>> = {
   en: {
@@ -18,6 +19,8 @@ export const SMS_ERROR_TRANSLATIONS: Record<string, Record<SmsErrorCode, string>
     insufficient_balance: "SMS service balance is depleted. Please try again later.",
     invalid_phone: "Invalid phone number. Please enter a valid Ethiopian phone number.",
     provider_unavailable: "SMS service is temporarily unavailable. Please try again in a few moments.",
+    unverified_beta_contact:
+      "This AfroMessage account is in Beta Testing mode. To receive real SMS, please verify this number in the AfroMessage portal (afromessage.com/contacts) or upgrade account to Live.",
   },
   am: {
     sms_not_configured: "የኤስኤምኤስ (SMS) አገልግሎት በሰርቨሩ ላይ አልተዋቀረም። እባክዎ አስተዳዳሪውን ያነጋግሩ።",
@@ -25,6 +28,8 @@ export const SMS_ERROR_TRANSLATIONS: Record<string, Record<SmsErrorCode, string>
     insufficient_balance: "የኤስኤምኤስ ሂሳብ በቂ ባለመሆኑ የማረጋገጫ ኮድ መላክ አልተቻለም። እባክዎ ቆየት ብለው ይሞክሩ።",
     invalid_phone: "የስልክ ቁጥሩ ትክክል አይደለም። እባክዎ ትክክለኛ የኢትዮጵያ ስልክ ቁጥር ያስገቡ።",
     provider_unavailable: "የኤስኤምኤስ አገልግሎት ለጊዜው አይሰራም። እባክዎ ከጥቂት ደቂቃዎች በኋላ እንደገና ይሞክሩ።",
+    unverified_beta_contact:
+      "የአፍሮሜሴጅ (AfroMessage) አካውንት በቤታ የሙከራ ደረጃ ላይ ስለሆነ ስልክ ቁጥሩ በአፍሮሜሴጅ ዳሽቦርድ (afromessage.com/contacts) ላይ መረጋገጥ አለበት።",
   },
   om: {
     sms_not_configured: "Tajaajilli SMS sarvarii irratti hin qophoofne. Maaloo bulchaa qunnamaa.",
@@ -32,6 +37,8 @@ export const SMS_ERROR_TRANSLATIONS: Record<string, Record<SmsErrorCode, string>
     insufficient_balance: "Tajaajila SMS irratti herregni gahaan hin jiru. Maaloo yeroo biraa yaalaa.",
     invalid_phone: "Lakkoofsi bilbilaa sirrii miti. Maaloo lakkoofsa bilbilaa Itoophiyaa sirrii galchaa.",
     provider_unavailable: "Tajaajilli SMS yeroof addaan citeera. Maaloo daqiiqaa muraasa booda irra deebi'aa yaalaa.",
+    unverified_beta_contact:
+      "Herregni AfroMessage sadarkaa qormaataa (Beta) irratti waan jiruuf lakkoofsi kun daashboordii afromessage.com/contacts irratti mirkanaa'uu qaba.",
   },
 };
 

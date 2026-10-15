@@ -64,8 +64,9 @@ export async function POST(req: NextRequest) {
   } catch (err: any) {
     console.error("[Send OTP API Error]", err?.message || err);
     return NextResponse.json(
-      { error: "Internal server error while sending verification code." },
+      { error: err?.message || "Internal server error while sending verification code." },
       { status: 500 }
     );
   }
 }
+

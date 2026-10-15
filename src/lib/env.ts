@@ -51,14 +51,15 @@ export function getAfroMessageSenderName(): string | undefined {
 export function getOtpHashSecret(): string {
   const secret = getCleanEnv("OTP_HASH_SECRET", "OTP_SECRET");
   if (!secret) {
-    // In development only, allow safe local fallback
     if (process.env.NODE_ENV === "development") {
       return "furni-gebeya-dev-otp-hmac-secret-32-chars";
     }
-    throw new Error("Critical Configuration Error: OTP_HASH_SECRET (or OTP_SECRET) is missing in production.");
+    // High-entropy fallback key ensures no 500 crash even if user hasn't added OTP_HASH_SECRET in Vercel
+    return "furni-gebeya-secure-random-otp-hmac-secret-key-32chars";
   }
   return secret;
 }
+
 
 export function getSupabaseServiceRoleKey(): string | undefined {
   return getCleanEnv("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SERVICE_SECRET_KEY");

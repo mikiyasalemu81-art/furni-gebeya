@@ -140,11 +140,34 @@ export async function sendSms({
       let errorCode: SmsErrorCode = "provider_unavailable";
       const lower = rawErrorMessage.toLowerCase();
 
-      if (res.status === 401 || res.status === 403 || lower.includes("unauthorized") || lower.includes("token") || lower.includes("credential")) {
+      if (
+        lower.includes("unverified contact") ||
+        lower.includes("beta testing") ||
+        lower.includes("verify your contacts") ||
+        lower.includes("verify this contact")
+      ) {
+        errorCode = "unverified_beta_contact";
+      } else if (
+        res.status === 401 ||
+        res.status === 403 ||
+        lower.includes("unauthorized") ||
+        lower.includes("token") ||
+        lower.includes("credential")
+      ) {
         errorCode = "invalid_credentials";
-      } else if (res.status === 402 || lower.includes("balance") || lower.includes("insufficient") || lower.includes("credit")) {
+      } else if (
+        res.status === 402 ||
+        lower.includes("balance") ||
+        lower.includes("insufficient") ||
+        lower.includes("credit")
+      ) {
         errorCode = "insufficient_balance";
-      } else if (lower.includes("phone") || lower.includes("recipient") || lower.includes("invalid to") || lower.includes("to")) {
+      } else if (
+        lower.includes("invalid phone") ||
+        lower.includes("invalid recipient") ||
+        lower.includes("invalid to") ||
+        lower.includes("phone number")
+      ) {
         errorCode = "invalid_phone";
       } else if (res.status >= 500) {
         errorCode = "provider_unavailable";
@@ -162,6 +185,7 @@ export async function sendSms({
         error: getSmsErrorMessage(errorCode, locale),
       };
     }
+
 
     return {
       success: true,
