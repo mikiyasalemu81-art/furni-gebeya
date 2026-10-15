@@ -1,10 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
+import { getSupabaseUrl, getSupabaseServiceRoleKey } from "@/lib/env";
 
 export function getSupabaseAdmin() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = getSupabaseUrl();
+  const serviceRoleKey = getSupabaseServiceRoleKey();
 
-  if (!supabaseUrl || !serviceRoleKey || serviceRoleKey.includes("mock") || serviceRoleKey.includes("placeholder")) {
+  if (
+    !supabaseUrl ||
+    !serviceRoleKey ||
+    serviceRoleKey.includes("mock") ||
+    serviceRoleKey.includes("placeholder")
+  ) {
     return null;
   }
 

@@ -83,5 +83,14 @@
     "subtitle": "Real-time communication between buyers and artisans",
     "noConversations": "No conversations yet. Inquire about any furniture item to chat directly with the seller.",
     "typePlaceholder": "Type your message..."
+  },
+  "auth": {
+    "smsNotConfigured": "SMS service is not configured on the server. Please contact support.",
+    "invalidCredentials": "SMS service authentication failed. Please contact the administrator.",
+    "insufficientBalance": "SMS service balance is depleted. Please try again later.",
+    "invalidPhone": "Invalid phone number. Please enter a valid Ethiopian phone number.",
+    "providerUnavailable": "SMS service is temporarily unavailable. Please try again in a few moments.",
+    "failedToSend": "Failed to send verification code. Please try again."
   }
 }
+

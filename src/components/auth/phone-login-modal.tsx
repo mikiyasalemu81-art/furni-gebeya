@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useAuth } from "@/components/auth/auth-provider";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Phone,
   ShieldCheck,
@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 export function PhoneLoginModal() {
   const { loginModalOpen, closeLogin, refreshUser } = useAuth();
   const t = useTranslations("common");
+  const locale = useLocale();
 
   const [step, setStep] = React.useState<"phone" | "otp">("phone");
   const [phoneNumber, setPhoneNumber] = React.useState("");
@@ -64,7 +65,7 @@ export function PhoneLoginModal() {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: targetPhone }),
+        body: JSON.stringify({ phone: targetPhone, locale }),
       });
 
       const data = await res.json();

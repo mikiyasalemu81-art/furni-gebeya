@@ -1,20 +1,14 @@
 import crypto from "node:crypto";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { sendSms } from "@/lib/afromessage";
+import { getOtpHashSecret } from "@/lib/env";
+import { SmsErrorCode } from "@/lib/sms-errors";
 
 const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const RESEND_COOLDOWN_MS = 60 * 1000; // 60 seconds
 const MAX_VERIFICATION_ATTEMPTS = 5;
 const MAX_CODES_PER_PHONE_HOUR = 3;
 const MAX_CODES_PER_IP_HOUR = 10;
-
-function getOtpHashSecret(): string {
-  return (
-    process.env.OTP_HASH_SECRET ||
-    process.env.OTP_SECRET ||
-    "furni-gebeya-secure-otp-hash-secret-32-chars-key"
-  );
-}
 
 /**
  * Hash code with HMAC-SHA256(code, OTP_HASH_SECRET)
@@ -178,13 +172,21 @@ export async function checkOtpRateLimits(
 }
 
 /**
- * Generate, store in otp_codes table, and send OTP via AfroMessage
+ * Generate, store in otp_codes table, and send OTP via AfroMessage.
+ * If delivery fails: deletes stored row so invalid codes are never kept,
+ * and notifies caller without confirming delivery to user.
  */
 export async function requestAndSendOtp(params: {
   phone: string;
   ipAddress?: string | null;
   locale?: string;
-}): Promise<{ success: boolean; cooldownSeconds?: number; error?: string }> {
+}): Promise<{
+  success: boolean;
+  cooldownSeconds?: number;
+  errorCode?: SmsErrorCode;
+  error?: string;
+  devCode?: string;
+}> {
   // 1. Rate limits check
   const rateLimit = await checkOtpRateLimits(params.phone, params.ipAddress);
   if (!rateLimit.allowed) {
@@ -244,13 +246,13 @@ export async function requestAndSendOtp(params: {
     }
   }
 
-  // In development only: print code to server console (Never log in production)
+  // In development only: clearly print code in terminal for developer ergonomics
   if (process.env.NODE_ENV === "development") {
-    console.log("=================================================");
-    console.log(`[DEV OTP ONLY] Phone: ${params.phone}`);
-    console.log(`[DEV OTP ONLY] Code:  ${code}`);
+    console.log("\n=======================================================");
+    console.log(`[DEV OTP ONLY] Recipient: ${params.phone}`);
+    console.log(`[DEV OTP ONLY] 6-Digit Code: >> ${code} <<`);
     console.log(`[DEV OTP ONLY] Expiry: 5 minutes (${expiresAt.toLocaleTimeString()})`);
-    console.log("=================================================");
+    console.log("=======================================================\n");
   }
 
   // Construct message in user's language (en, am, om)
@@ -265,15 +267,17 @@ export async function requestAndSendOtp(params: {
   const smsResult = await sendSms({
     to: params.phone,
     message: smsText,
+    locale: params.locale || "en",
+    otpCodeForDev: code,
   });
 
   if (!smsResult.success) {
-    // If SMS fails, delete the stored code as requested in spec
+    // If SMS fails: immediately delete the stored OTP row from Supabase and memory
     if (admin) {
       try {
         await admin.from("otp_codes").delete().eq("id", otpId);
-      } catch {
-        // ignore
+      } catch (delErr) {
+        console.error("[Failed deleting failed OTP record from Supabase]", delErr);
       }
     }
     const idx = memoryOtps.findIndex((o) => o.id === otpId);
@@ -281,6 +285,7 @@ export async function requestAndSendOtp(params: {
 
     return {
       success: false,
+      errorCode: smsResult.errorCode,
       error: smsResult.error || "Failed to deliver SMS. Please try again in a moment.",
     };
   }
@@ -288,6 +293,7 @@ export async function requestAndSendOtp(params: {
   return {
     success: true,
     cooldownSeconds: 60,
+    devCode: process.env.NODE_ENV === "development" ? code : undefined,
   };
 }
 
@@ -417,14 +423,15 @@ export async function verifyOtpAttempt(
 /**
  * Backward compatibility alias for earlier modules
  */
-export async function createAndSendOtp(phone: string) {
-  return requestAndSendOtp({ phone });
+export async function createAndSendOtp(phone: string, locale?: string) {
+  return requestAndSendOtp({ phone, locale });
 }
 
-export async function sendOtpViaAfroMessage(phone: string, code: string) {
+export async function sendOtpViaAfroMessage(phone: string, code: string, locale?: string) {
   return sendSms({
     to: phone,
     message: `Your Furni Gebeya verification code is: ${code}. Valid for 5 minutes.`,
+    locale,
+    otpCodeForDev: code,
   });
 }
-

@@ -83,5 +83,14 @@
     "subtitle": "Qunnamtii kallattii bittoota fi ogeessota mukaa jiddutti",
     "noConversations": "Hamma ammaatti mariin hin jiru. Mi'oota filachuun ogeessa waliin mari'adhaa.",
     "typePlaceholder": "Ergaa keessan asitti barreessaa..."
+  },
+  "auth": {
+    "smsNotConfigured": "Tajaajilli SMS sarvarii irratti hin qophoofne. Maaloo bulchaa qunnamaa.",
+    "invalidCredentials": "Eenyummaa tajaajila SMS mirkaneessuun hin danda'amne. Maaloo bulchaa qunnamaa.",
+    "insufficientBalance": "Tajaajila SMS irratti herregni gahaan hin jiru. Maaloo yeroo biraa yaalaa.",
+    "invalidPhone": "Lakkoofsi bilbilaa sirrii miti. Maaloo lakkoofsa bilbilaa Itoophiyaa sirrii galchaa.",
+    "providerUnavailable": "Tajaajilli SMS yeroof addaan citeera. Maaloo daqiiqaa muraasa booda irra deebi'aa yaalaa.",
+    "failedToSend": "Koodii mirkaneessaa erguun hin danda'amne. Maaloo irra deebi'aa yaalaa."
   }
 }
+

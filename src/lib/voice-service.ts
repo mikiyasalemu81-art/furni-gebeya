@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { getOtpHashSecret } from "@/lib/env";
 
 const localVoiceStore = new Map<string, { buffer: Buffer; mimeType: string }>();
 
@@ -60,7 +61,7 @@ export async function createSignedVoiceUrl(
   }
 
   // Secure tokenized dev route
-  const secret = process.env.OTP_SECRET || "furni-signed-url-secret";
+  const secret = getOtpHashSecret();
   const expiresAt = Date.now() + expiresInSeconds * 1000;
   const token = crypto
     .createHmac("sha256", secret)
@@ -84,7 +85,7 @@ export function validateVoiceSignedToken(
   if (Date.now() > Number(expires)) {
     return false;
   }
-  const secret = process.env.OTP_SECRET || "furni-signed-url-secret";
+  const secret = getOtpHashSecret();
   const expectedToken = crypto
     .createHmac("sha256", secret)
     .update(`${storagePath}:${expires}`)
@@ -92,3 +93,4 @@ export function validateVoiceSignedToken(
 
   return token === expectedToken;
 }
+

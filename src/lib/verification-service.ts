@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { getOtpHashSecret } from "@/lib/env";
 import {
   UserProfile,
   VerificationStatus,
@@ -105,7 +106,7 @@ export async function createSignedDocumentUrl(
   }
 
   // Secure tokenized dev route
-  const secret = process.env.OTP_SECRET || "furni-signed-url-secret";
+  const secret = getOtpHashSecret();
   const expiresAt = Date.now() + expiresInSeconds * 1000;
   const token = crypto
     .createHmac("sha256", secret)
@@ -126,7 +127,7 @@ export function verifySignedDocumentToken(
   token: string
 ): boolean {
   if (Date.now() > expires) return false;
-  const secret = process.env.OTP_SECRET || "furni-signed-url-secret";
+  const secret = getOtpHashSecret();
   const expected = crypto
     .createHmac("sha256", secret)
     .update(`${storagePath}:${expires}`)
