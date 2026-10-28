@@ -1,8 +1,9 @@
 import crypto from "node:crypto";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { sendSms } from "@/lib/afromessage";
+import { sendUnifiedSms } from "@/lib/sms";
 import { getOtpHashSecret } from "@/lib/env";
 import { SmsErrorCode } from "@/lib/sms-errors";
+
 
 const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const RESEND_COOLDOWN_MS = 60 * 1000; // 60 seconds
@@ -94,6 +95,21 @@ export async function checkOtpRateLimits(
           error: `Please wait ${remSecs} seconds before requesting a new code.`,
         };
       }
+
+      // Check memory store for immediate cooldown resiliency
+      const memRecent = memoryOtps.find(
+        (o) => o.phone === phone && new Date(o.created_at) >= new Date(cooldownWindow)
+      );
+      if (memRecent) {
+        const diffMs = now.getTime() - new Date(memRecent.created_at).getTime();
+        const remSecs = Math.max(1, Math.ceil((RESEND_COOLDOWN_MS - diffMs) / 1000));
+        return {
+          allowed: false,
+          cooldownSeconds: remSecs,
+          error: `Please wait ${remSecs} seconds before requesting a new code.`,
+        };
+      }
+
 
       // 2. Check max 3 codes per phone per hour
       const { count: phoneCount } = await admin
@@ -263,13 +279,14 @@ export async function requestAndSendOtp(params: {
     smsText = `Furni Gebeya: koodiin mirkaneessaa keessan ${code} dha. Daqiiqaa 5 keessatti tajaajila ala ta'a.`;
   }
 
-  // Send via AfroMessage
-  const smsResult = await sendSms({
+  // Send via Unified SMS Gateway (SMS Ethiopia with AfroMessage fallback)
+  const smsResult = await sendUnifiedSms({
     to: params.phone,
     message: smsText,
     locale: params.locale || "en",
     otpCodeForDev: code,
   });
+
 
   if (!smsResult.success) {
     // If SMS fails: immediately delete the stored OTP row from Supabase and memory
@@ -428,10 +445,11 @@ export async function createAndSendOtp(phone: string, locale?: string) {
 }
 
 export async function sendOtpViaAfroMessage(phone: string, code: string, locale?: string) {
-  return sendSms({
+  return sendUnifiedSms({
     to: phone,
     message: `Your Furni Gebeya verification code is: ${code}. Valid for 5 minutes.`,
     locale,
     otpCodeForDev: code,
   });
 }
+

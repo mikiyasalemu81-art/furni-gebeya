@@ -4,6 +4,8 @@ import {
   getAfroMessageToken,
   getAfroMessageIdentifierId,
   getAfroMessageSenderName,
+  getSmsEthiopiaApiKey,
+  getSmsProvider,
   getOtpHashSecret,
   getSupabaseServiceRoleKey,
   getSupabaseUrl,
@@ -18,8 +20,7 @@ export const dynamic = "force-dynamic";
  * GET /api/health/sms
  *
  * Verifies environment variable presence ("set" or "missing") without revealing values.
- * Performs a harmless credential verification call to AfroMessage balance endpoint
- * (no actual SMS is sent).
+ * Performs a harmless credential verification call to providers.
  */
 export async function GET(req: NextRequest) {
   // 1. Authorize: Session must be admin or header match CRON_SECRET / OTP_SECRET
@@ -45,9 +46,15 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const activeProvider = getSmsProvider();
+  const hasSmsEthiopia = Boolean(getSmsEthiopiaApiKey());
+  const hasAfroMessage = Boolean(getAfroMessageToken());
+
   // 2. Audit OTP and SMS Flow Environment Variables
   const envAudit = {
-    AFROMESSAGE_API_TOKEN: getAfroMessageToken() ? "set" : "missing",
+    SMS_PROVIDER: activeProvider,
+    SMSETHIOPIA_API_KEY: hasSmsEthiopia ? "set" : "missing",
+    AFROMESSAGE_API_TOKEN: hasAfroMessage ? "set" : "missing",
     AFROMESSAGE_IDENTIFIER_ID: getAfroMessageIdentifierId() ? "set" : "missing",
     AFROMESSAGE_SENDER_NAME: getAfroMessageSenderName() ? "set" : "missing",
     OTP_HASH_SECRET: getCleanEnv("OTP_HASH_SECRET", "OTP_SECRET") ? "set" : "missing",
@@ -58,7 +65,7 @@ export async function GET(req: NextRequest) {
 
   // 3. Harmless AfroMessage Credential Verification
   const token = getAfroMessageToken();
-  let credentialsStatus: {
+  let afroMessageStatus: {
     tested: boolean;
     accepted: boolean;
     httpStatus?: number;
@@ -82,7 +89,7 @@ export async function GET(req: NextRequest) {
       const data = await res.json().catch(() => null);
 
       if (res.ok && data?.acknowledge === "success") {
-        credentialsStatus = {
+        afroMessageStatus = {
           tested: true,
           accepted: true,
           httpStatus: res.status,
@@ -93,7 +100,7 @@ export async function GET(req: NextRequest) {
           (Array.isArray(data?.response?.errors) && data.response.errors.join("; ")) ||
           data?.message ||
           `Provider returned status ${res.status}`;
-        credentialsStatus = {
+        afroMessageStatus = {
           tested: true,
           accepted: false,
           httpStatus: res.status,
@@ -101,7 +108,7 @@ export async function GET(req: NextRequest) {
         };
       }
     } catch (err: any) {
-      credentialsStatus = {
+      afroMessageStatus = {
         tested: true,
         accepted: false,
         message: `Network error connecting to AfroMessage API: ${err?.message || "Unknown error"}`,
@@ -109,18 +116,28 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const allRequiredSet =
-    envAudit.AFROMESSAGE_API_TOKEN === "set" &&
+  const hasAtLeastOneProvider = hasSmsEthiopia || (hasAfroMessage && afroMessageStatus.accepted);
+  const coreVariablesSet =
     envAudit.OTP_HASH_SECRET === "set" &&
     envAudit.SUPABASE_SERVICE_ROLE_KEY === "set" &&
     envAudit.NEXT_PUBLIC_SUPABASE_URL === "set" &&
     envAudit.ADMIN_PHONE === "set";
 
   return NextResponse.json({
-    status: allRequiredSet && credentialsStatus.accepted ? "healthy" : "warning",
+    status: coreVariablesSet && hasAtLeastOneProvider ? "healthy" : "warning",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
+    activeProvider:
+      activeProvider === "smsethiopia" || (activeProvider === "auto" && hasSmsEthiopia)
+        ? "SMS Ethiopia (smsethiopia.com)"
+        : "AfroMessage (afromessage.com)",
     variables: envAudit,
-    afroMessage: credentialsStatus,
+    providers: {
+      smsEthiopia: {
+        configured: hasSmsEthiopia,
+        endpoint: "https://smsethiopia.com/api/sms/send",
+      },
+      afroMessage: afroMessageStatus,
+    },
   });
 }

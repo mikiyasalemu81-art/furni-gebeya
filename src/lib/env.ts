@@ -48,6 +48,18 @@ export function getAfroMessageSenderName(): string | undefined {
   return getCleanEnv("AFROMESSAGE_SENDER_NAME");
 }
 
+export function getSmsEthiopiaApiKey(): string | undefined {
+  return getCleanEnv("SMSETHIOPIA_API_KEY", "SMS_ETHIOPIA_API_KEY", "SMSETHIOPIA_KEY");
+}
+
+export function getSmsProvider(): "smsethiopia" | "afromessage" | "auto" {
+  const provider = getCleanEnv("SMS_PROVIDER")?.toLowerCase();
+  if (provider === "afromessage") return "afromessage";
+  if (provider === "smsethiopia") return "smsethiopia";
+  return "auto";
+}
+
+
 export function getOtpHashSecret(): string {
   const secret = getCleanEnv("OTP_HASH_SECRET", "OTP_SECRET");
   if (!secret) {

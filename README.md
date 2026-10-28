@@ -80,11 +80,14 @@ When deploying to [Vercel](https://vercel.com):
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase Project URL (`https://<project-ref>.supabase.co`) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase Project Anonymous Public Key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes | Supabase Secret Service Role Key (Bypasses RLS on server endpoints) |
-| `AFROMESSAGE_API_TOKEN` | Yes | AfroMessage API Bearer Token for SMS delivery in Ethiopia (`AFROMESSAGE_API_KEY` supported as alias) |
+| `SMS_PROVIDER` | Optional | Active SMS provider: `smsethiopia`, `afromessage`, or `auto` (default) |
+| `SMSETHIOPIA_API_KEY` | Optional | SMS Ethiopia (`smsethiopia.com`) API Key (Direct Ethio Telecom & Safaricom OTP) |
+| `AFROMESSAGE_API_TOKEN` | Optional | AfroMessage API Bearer Token for SMS delivery in Ethiopia (`AFROMESSAGE_API_KEY` supported as alias) |
 | `AFROMESSAGE_SENDER_NAME` | Optional | Registered Sender Name (Leave empty if unapproved or using account default) |
 | `AFROMESSAGE_IDENTIFIER_ID` | Optional | AfroMessage Identifier ID / UUID |
 | `OTP_HASH_SECRET` | Yes | 32+ character random secret for HMAC-SHA256 OTP hashing (`OTP_SECRET` supported as alias) |
 | `ADMIN_PHONE` | Yes | Primary administrator phone number (e.g. `+2519XXXXXXXX`) |
+
 | `CRON_SECRET` | Yes | Secret token for Vercel Cron jobs (`/api/cron/trial-reminders`) |
 | `CLOUDINARY_CLOUD_NAME` | Yes | Cloudinary Cloud Name for media storage |
 
