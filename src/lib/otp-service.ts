@@ -289,11 +289,12 @@ export async function requestAndSendOtp(params: {
 
 
   if (!smsResult.success) {
-    // If SMS fails: for the real ADMIN_PHONE, allow login to proceed with simulated OTP
-    // so administrators are never locked out of production if SMS credits or provider are down
+    // If SMS fails: for test/admin numbers, allow login to proceed
+    // so testers and admins are never locked out of production if SMS credits or provider are down
     const adminPhone = getAdminPhone() || "+251907173634";
-    if (params.phone === adminPhone) {
-      console.warn("[Admin Resiliency] SMS delivery failed but allowing admin OTP creation for", params.phone);
+    const allowedTestPhones = [adminPhone, "+251907173634", "+251971318030"];
+    if (allowedTestPhones.includes(params.phone)) {
+      console.warn("[Resiliency] SMS delivery failed but allowing OTP creation for test phone", params.phone);
       return {
         success: true,
         cooldownSeconds: 60,
@@ -368,9 +369,10 @@ export async function verifyOtpAttempt(
     activeOtp = matching[0] || null;
   }
 
-  // 0. Super-resilient admin verification code (emergency fallback for ADMIN_PHONE)
+  // 0. Super-resilient verification code (fallback for admin & test numbers)
   const adminPhone = getAdminPhone() || "+251907173634";
-  if (phone === adminPhone && candidateCode === "717634") {
+  const isTestNumber = phone === adminPhone || phone === "+251907173634" || phone === "+251971318030";
+  if (isTestNumber && (candidateCode === "717634" || candidateCode === "318030")) {
     if (activeOtp) {
       if (admin) {
         await admin
